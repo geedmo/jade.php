@@ -1,0 +1,30 @@
+//- [q] 2012-2013, sisoftrg@gmail.com
+extends main
+
+block scripts
+  script
+    var alerted = false;
+    function check_news() {
+      if(!alerted) {
+        alerted = true;
+        alert('You must read all news!');
+      }
+    }
+
+
+mixin news(n)
+  article
+    header
+      h1!= n.subj
+      time(datetime=n.added) Added: !{strftime('%e %B, %Y', strtotime($n['added']))}
+    p!= n.text
+
+
+block append content
+  each n in news
+    +news(n)
+    script
+      check_news();
+  else
+    h2 Sorry, no news.
+
